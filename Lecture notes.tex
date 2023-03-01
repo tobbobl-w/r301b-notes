@@ -1,0 +1,229 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[authoryear]{natbib}
+\usepackage{enumerate}
+\usepackage{comment}
+\setlength{\parindent}{0pt}
+\usepackage[parfill]{parskip}
+\date{Lent 2023}
+\title{R301 Notes on Lectures}
+\author{Tobias Leigh-Wood}
+\usepackage[letterpaper, margin=1.1in]{geometry}
+\linespread{1.1}
+
+\begin{document}
+\maketitle
+\section*{Topic 4: The Mixed Logit Model}
+
+\begin{itemize}
+      \item Reading is important for mixed logit. Train is essential. (I HAVENT DONE THIS)
+      \item Logit models suffer from independence of irrelevant alternatives. So the odds ratio can be just the ratio between two options --- but this is not going to be true in general.
+            Also logit models assume that everyone has the same partial effects and parameters.
+      \item Mixed logit allows us to relax these assumptions.
+      \item Consider following RUM model $Y_{ij} = v^\prime_j \omega_{i} + \epsilon_{ij}$ \\
+            The parameter $\omega_{i} = \bar{\omega} + \tilde{\omega}$
+            The distribution of  $\omega_{i}$ is $g(\omega|\bar{\omega}, \varOmega)$
+            Each parameter has an individual distribution and a joint distribution.
+      \item Probability an individual chooses $j$
+      \item $P(j|v, \eta) = \int_{\omega} L(j; v;\omega)g(\omega|\eta)d\omega = \int \exp^{v_j\omega}/\sum_{j \in \Sigma} \exp^{v_j\omega} g(\omega|\eta) d\omega$
+      \item This has a logit core but then $\omega$ is a random variable which we condition on.
+            We estimate the mean and covariance of $g$. $\omega = \bar{\omega} + \Lambda\zeta$
+            $\eta = (\bar{\omega}, \sum _{\omega})$ is a vector of hyper parameters.
+
+      \item Then we can get the log liklihood by taking logs of the joint probablity of $P$.
+      \item If choices are independent then the variance of $g()$ is just a diagonal matrix with the variances of each choice.
+      \item Mulitnomial logit means that the mean fully describes the distribution of the parameters.
+      \item We can discretise $P(j|v, \eta)$ and let $\omega$ take on $m$ values. This is referred to a latent class model.
+      \item Because we get a mixture of $L$ (often different) distributions we need to simulate the integrals.
+      \item This is a specific form of parametric random parameter models.\\
+            $f(y_i|x_i, \eta) = \int f(y_i|x_i; \gamma_i) g(\gamma|\eta) d \gamma$ The mixed logit model is a form of this more general type of model.
+      \item But in general econometrics is moving toward models that don't make all of these distributional assumptions.
+            I.e do we actually believe the erros are extreme value distributd?
+      \item We have two types of model --- Random Coefficient Mixed logit and Error Components Mixed Logit.
+      \item \textbf{Random Coefficient Mixed logit} --- Capture variation in preferences related to observed attributes, which may be interacted with observed characteristics.\\
+            We get a composite error term that depends on $\omega$  $\zeta_i = V^{\prime}\tilde{\omega}_{i} + \epsilon_{i}$  $\varOmega$ \\
+            Tied together by constant taste parameters. In the lectures we look at the covariance between two choices. Probably useful to write that out.
+      \item \textbf{Error components mixed logit} --- Capture correltations amongst alternatives. \\
+            $U_{ij} = v^{\prime}_{j} + z^{\prime}_{j}\mu_i + \epsilon_{ij}$ \\
+            $\mu_i$ is a vector of stochastic terms with zero mean. We let alternatives share this part of utility which induces correlation amongst alternatives.
+            $K$ different groups of alternatives.
+            We can write the $J x 1$ composite error term $\zeta = z^{\prime}_{j}\mu_i + \epsilon_{j}$ CHECK SUBSCRIPTS ON THIS....
+      \item Example: Nested logit for 3G and 2G phones.
+      \item Example: Introduction of electric car\\
+            Logit: Electric car draws from all others cars proportionately.\\
+            Mixed logit: Electric car draws proportionately from more similar cars --- perhaps these cars are smaller so then the effect of electric cars on emissions is smaller.
+      \item \textbf{Preferences for Electricity Supply} \\
+            Varying preferences for electricity supply. Stated preference survey.
+            We estimate the mean and standard deviation of different variables --- in the lecture example we set all covariances to 0. We can allow this to vary. \\
+            This gives us the preferences of a population --- and then we can say what proportion of populatation has a positive coefficient and other similar questions.
+      \item Other papers include Berry et al 1995.
+      \item
+
+
+\end{itemize}
+
+
+
+\section*{Topic 5: Panel Data Models}
+
+\begin{itemize}
+      \item Back to linear models.
+      \item Main difference will be correlated random effects.
+            When we set this up we get a natural test for the random effects estimator.
+      \item Asymptotic results generally based on small T and large N.
+      \item Several advantages: more observatoins, discriminate between multiple hypothesis, control for unobserved heterogeneity at the individual level.
+      \item Couple of examples -- unions, production functions.
+            Production function might have correlation between managerial quality, time invariant, and labour input, time varying.
+      \item We restrict our models to homogeneous parameters. We don't let parameters change across time or individuals.
+      \item Understand the price of estimators. Be able to talk about the trade off betweem them.
+      \item Consider a composite error term $ \alpha_i + \epsilon_{it}$. A pooled model sets $\alpha = \alpha_i$.
+            If $\alpha \neq \alpha$ and uncorrelated with $x_{it}$, then the pooled OLS estimator (POLS) requires panel-corrected standard errors. If correlated with $x_{it}$ then POLS is inconsistent.
+
+      \item Assumptions for POLS:
+            \begin{align*}
+                  y_{it} & = \beta x_{it} + v_{it}    \\
+                  v_{it} & = \alpha_i + \epsilon_{it} \\
+            \end{align*}
+            We focus on two issues. Distribution of $\alpha_i$ and strict exogeneity of $\epsilon_{it}$.
+      \item Key factor is whether the random effects are correlated with $x_{it}$
+      \item Decompose total sum of squares to the within sum plus the between sum. When we do fixed effects we just use the within variation and discard the between sum.
+      \item We can think about this in a similar way to IV --- decomposing the endogenous variation from the exogenous.
+      \item Random effects takes a weighted average of both parts of the within and between sum of squares.
+      \item Strict exogeneity means that all the errors are uncorrelated. $E(\epsilon_{it}|x_{i1}, x_{i2}, x_{i3}, ..., x_{iT}, \alpha_i) = 0$
+            It's easy to think about violations.
+            Then we have weak exogeneity where $\epsilon_{it}$ is uncorrelated with all $x_{it}$ up to time period $t$.
+      \item Least squares dummy variable regression is same as the fixed effects estimator.
+      \item With the within estimator we need to have strict exogeneity --- Why? Because the transformation of the error means that $\epsilon$
+      \item \textbf{Random effects estimator}
+      \item Form of GLS estimator because we get a covariance matrix that we need to estimate.
+      \item Pooled OLS is consistent but inefficient under the random effects specification.
+      \item Under our assumptions we get a block diagonal covariance matrix because of assuming 0 covariance between units in a time period.
+      \item Apply a transformation to all individuals --- $\Sigma^{-1/2}$.
+      \item OLS --- no error covariance across obsrvations for a given i. Fixed effects --- GLS converges to the Fixed effect estimator. \\
+            \textbf{Next lecture}
+      \item Have a look at the between estimator.
+      \item Lecture started by looking at coefficients and standard errors. Seemed to say looking at standard errors was a better way to go than talking about coefficients in the exams.
+      \item Random effects: Critical assumption -- zero correlation between $\alpha$ and $x_{it}$.
+      \item Hausman test: tests equivalence of random effects and within estimator.
+            $$k = \hat{\beta}_{RE} - \hat{\beta}_{W}$$
+            Distributed chi squared.
+            No correction for clustered standard errors -- the errors used for $\hat{\beta}_{w}$ are iid.
+      \item We can use a correction.
+      \item Quasi demeaned variables we get a random effects estimator with a $x_{it}$ that is still in the equation.
+      \item \textbf{Correlated Random Effects}
+      \item Strict exogeneity --- (EMPHISIE THIS) - understand with and without conditioning on x
+      \item $E[\alpha_{i}|x_{i1}, ..., x_{iT}] = \zeta + \bar{x_{i}} \delta$
+      \item Therefore $E[y_{it}|x_{i}] = E[y_{it}|x_{it}, \bar{x_{i}}] = x_{it}\beta +  \zeta + \bar{x_{i}} \delta + v$
+      \item Ignoring $\bar{x_{i}}$ we have a random effects model. By including it we allow endogeneity in the model because we can control for it.
+      \item We can then use pooled OLS on this model to consistently estimate all parameters.
+      \item Test of $\delta$ is a test of the RE specification.
+      \item Does anyone use different conditioning statistics? I.e. condition on the sd rather than mean.
+\end{itemize}
+
+\section*{Topic 8: Bayesian Inference}
+\begin{itemize}
+      \item Cornfield Bayes Theorem 1967, Greenberg chapters 1-4 for background readings.
+      \item Combining evidence, parameter estimation, paratmeter heterogeneity
+      \item Main topics: hierarchical models, model uncertainty, data augmentation, bayesian moddelling
+      \item Have a look at preable post lectures.
+      \item Key differences: Estimate posterior distribution, no test statistics, no estimators. Hypothesis testing is reversed --- no longer testing D condition on H, now we test H condition on D.
+      \item Laplace BT. $P(B|A) = P(A\cap B)/(P(A))$
+      \item Classical perspective give a probability distribution on $\theta$, in bayesian world $\theta$ is fixed and we just have a prob about it.
+      \item Bayesian analysis asks what the probility of cancer is if i smoke.
+      \item We observe probability of smoking if I have cancer. THen we can use bayes theorem to back out probility of cancer is if i smoke.
+      \item Binomial distribution -- estimating p with bayes.
+            $$Pr(p|x) = \frac{P(x|p)P(p)}{P(x)}$$
+            $Pr(p)$ is my prior probability. $Pr(p|x) $ is my posterior distribution. \\
+            Bayes solved this and said the the posterior distribution given x is the beta dist
+            $$Beta(X + 1, N - X + 1)$$
+            $X$ and $N$ come from binomial.
+      \item Bayes theorem for parameters.
+            $p(\theta, y)$ denotes a posterior distribution.
+            Prob of $y$ conditioning on $\theta$.
+            $$ f(y|\theta) = \prod f(y_{i}|\theta)$$
+            Then posterior distribution is
+            $$ p(\theta|y) = f(y|\theta)p(\theta)/f(y)$$
+
+            $f(y)$ is the marginal liklihood.
+            $f(y|\theta)$ is the liklihood function.
+            $p(\theta)$ is the prior distribution.
+
+      \item \textbf{Natural conjugate priors}
+      \item A class of priors is a conjugate for a family of likelihoods if both prior and posterior are in the same class for all data y.
+            Basically means we can keep the same distribution for priors given a distribution of the data.
+
+      \item We start from a framework of estimating the probabilit distribution. Not separting it and using null hyopthesis to form probability.
+      \item With binomial and beta distribution the mean of the posterior is a weighted average of the MLE estimator and the prior mean.
+            So if we've got enough data then the priors won't matter. Your priors are being swamped by the data. Your posterior collapses to the distribution of the data as you increase the amount of data?.
+      \item How do we use data to revise a prior probability about a hypothesis?
+      \item $P(H_{0}) = p(w = 0)$ and $P(H_{1}) = p(w = 1)$.
+            Posterior prob for $h_{0}$.
+            $$P(H_{0}|y) =p(w = 0|y) = \frac{p(w = 0)p(y|w = 0)}{p(y)}$$
+            We then can get the Bayes Factor, posterior odds (relative likelihood) of posterior probs.
+            $$BF = \frac{P(H_{0}|y)}{P(H_{1}|y)} = \frac{p(w = 0)p(y|w = 0)}{p(w = 1)p(y|w = 0)}$$
+      \item Posterior distribution is proportional to the prior and the liklihood component.
+      \item One topic of contention is where we get our priors from.
+      \item Questions on covid in the lecture slides are worth looking at
+\end{itemize}
+
+\section*{Topic 8: ii}
+\begin{itemize}
+      \item Multilevel Data, Hierarchical moddelling
+      \item Readings: Stein's Paradox in statistics -- interesting apparently. Casella -- short and informative.
+      \item Model Averaging. Everything we've done so far takes the model as given, then we find values for the parameters etc all conditional on the model.
+            Bayesians don't like this. They want to make inference on the determinants of y unconditional on the model.
+            We specify a functional form but then estimate many models.
+      \item Let $\theta$ denote parameters. We estimate the posterior density. Model $M_{i}$ described by a k by 1 binary vector $\gamma$
+            Where the $k_{th}$ element of $\gamma$ is one (zero) indicating the inclusion of $x_{k}$ in the model.
+      \item What we might be interested in: Marginal Likelihood, posterior model uncertainty,
+            posterior model odds, posterior parameter distributions
+
+      \item How do we elicit prior distributions for: Space of models $p(m_{j})$, parameters $\theta$ that appear in specific models, parameters $\theta$ that are common across models.
+      \item For example:
+            $$p(M_{j}|\pi) = p(\gamma | \pi) = \prod \pi^{\gamma_{i}}(1-\pi)^{1 - \gamma_{i}}$$
+            where $\pi_{i}$ denotes the independent prior inclusion of variable $x_{i}$ in $M_{j}$.
+            This would be a simple benchmark prior we could use.
+
+      \item For example: Doppelhofer and Weeks 2009 use a bayesian set up to see which variables are useful in describing GDP growth.
+            They find posterior inclusion probabilities. These tells us whether we should include variables or not in the model.
+
+            \textbf{Multi level data}
+
+      \item It's common for data to be organised into hierarchical levels.
+
+      \item Sampling model should take into account the hierarchical nature of the data.
+      \item Consider a population with J groups and $n_{j}$ individuals per group.
+            Each group has a parameter $\theta_{j}$ so we can get within group variation and between group -- between is determined by the different js.
+
+      \item How do we write a posterior distribution for these parameters?
+            Quite complicated model but we can use Gibbs Sampling which approximates the posterior distribution
+            $$p(\mu_{1}, ..., \mu_{j}, \psi, \tau^{2}, \sigma^{2}|y_{1}, ..., y_{j}) \propto \\\\
+                  p(y_{1}, ..., y_{J}|\mu_{1}, ..., \mu_{j}, \psi, \tau^{2}, \sigma^{2}) \times p(\mu_{1}, ..., \mu_{j}|\tau^{2}, \sigma^{2}) \times p(\psi)p(\tau^{2})p(\sigma^{2})$$
+
+      \item We can use this set up to talk about FE and RE in the classical panel data model --- FE has constant mu's. Didn't understand this fully.
+      \item If the sample size is small the estimated variance of the group may be large. Stein's paradox defines circumstances in which there are estimators better than the arithmetic average ((HAVE A LOOK AT THIS)).
+      \item \textbf{Empirical Bayes}
+      \item We need to assume a parametric setup so that we can have conjugate pairs -- others our priors and posteriors won't match which wouldn't make sense.
+      \item Empirical Bayes estimators the hyperparameters with data. (this is the Greene reading I think?)
+      \item Bayesians don't like this because we are essentially estimating our priors from the data.
+            We can then estimate posterior using our estimated hyperparameters. See slide 14.
+
+      \item Baseball example: We have batting average after first 45 bats. We want to estimate the true mean.
+            Morris 1983 utilizes Empirical Bayes. The EB means did better than just using arithmetic mean in predicting the true mean.
+
+      \item Now link panel data models with Empirical Bayes. The random effects estimator is an inverse variance weighted average of the pooled estimator and the FE estimator.
+            Compromise between the two models.
+
+      \item If we go back to panel data notes we can see something similar where the random effects estimator is a weighted average of the pooled and FE estimators.
+
+            \textbf{Summary}
+
+      \item OLS treats $\alpha_{i}$ all the same as constant. If $\alpha_{i}$ has a distribution we can use RE. If $\alpha$ are all different but not random we use FE.
+      \item In a Bayesian world all parameters are treated as random variables, so $\alpha_{i}$ has a distribution.
+
+      \item For next week -- Chapter 14 of Train has a good overview.
+\end{itemize}
+
+\end{document}
