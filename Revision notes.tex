@@ -24,8 +24,66 @@
 \end{itemize}
 
 \begin{itemize}
-    \item probit, logit, control function, reduced form, etc
-    \item Pure conditional logit, Multinomial logit, multinomial probit (trinomial probit), mixed logit,
+    \item probit, logit, control function, reduced form [think there were some others in this category]
+    \item Pure conditional logit, Multinomial logit, multinomial probit (trinomial probit), mixed logit
+    \item FE, RE, CRE
+    \item Bayesian stuff? bayes factor/odds ratio
 \end{itemize}
+
+\section*{Binary response models}
+\begin{itemize}
+    \item Partial Effect: $ \frac{\partial E_{u}[Y(x)]}{\partial x} =  \frac{\partial F(x)}{\partial x}$ this is an random variable associated with x. Two associated objects of interest are:
+          Partial Effect at the Average (PEA) -- $\frac{\partial F(x)}{\partial x}\Bigr|_{\substack{x_{e}=E(x)}}$ and
+          the Average Partial Effect (APE) -- $E\big[\frac{\partial F(x)}{\partial x}\big]$
+    \item Partial effects in probit model with unobserved heterogeneity. $c_{i}$ denotes unobserved heterogeneity.
+          \begin{align*}
+              P(y_{i} = 1 | x_{i}, c_{i})     & = \Phi(x_{i}\beta + \gamma c_{i}) \\
+                                              & = \Phi(x_{i}\beta / \sigma)       \\
+              \text{Where} \quad \quad \sigma & =\gamma^{2}\tau^{2} + 1
+          \end{align*}
+          So there is attenuation bias in the coefficient estimates of $\beta$ since we do not know $\gamma$ or $\tau$.
+          We cannot get correct partial effects for this reason.
+
+    \item We can still get the APE since
+          \begin{align*}
+              E_{c}[\beta\phi(x_{i}\beta + \gamma c_{i})] & = \frac{\beta}{\sigma}
+              \phi(\frac{\beta x_{i}}{\sigma})
+          \end{align*}
+          \textbf{anyway}. And this is what we estimate.
+          If there is correlation we will not get consistent estimates of the APE in probit, but we won't in linear models either.
+    \item \textbf{Control Functions}
+          Generic definition is a variable that when added to a regression renders an endogenous variable exogenous.
+          In our setting we view it as an alternative to other IV estimators.
+
+    \item Aside: the model or structural model refers to the equation we are trying to estimate.
+          The \textbf{reduced form} tells us how certain variables are linked together.
+          For example, if there is a variable that can solve as an instrument it will be in the reduced form.
+
+    \item We consider four situations:
+          \begin{table}[htbp]
+              \centering\begin{tabular}{ l l l }
+                  \textbf{Structural Model} & \textbf{Reduced form} & \textbf{Estimation technique} \\  [0.5ex]
+                  Linear                    & Linear                & CF, 2SLS                      \\
+                  Linear                    & Nonlinear             & CF                            \\
+                  Nonlinear                 & Linear                & CF, 2SLS                      \\
+                  Nonlinear                 & Nonlinear             & MLE
+              \end{tabular}
+
+          \end{table}
+
+    \item Consider a control function approach to the continuous linear-linear problem.
+          $y = x^{e}\beta_{o} + x^{o}\beta_{o} + \epsilon$ and reduced form $x^{e} = z \theta + e $.
+          We require 2SLS assumptions.
+          Control function approach: estimate a model for the endogenous explanatory variables (EEVs)
+          as a function of the instruments -- i.e. the reduced form.
+          And then use these residuals in the structural model.
+    \item Control function is good because it gets around the forbidden regression for linear structural model
+          vs nonlinear reduced form.
+
+
+
+
+\end{itemize}
+
 
 \end{document}
