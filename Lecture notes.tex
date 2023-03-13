@@ -225,5 +225,41 @@
 
       \item For next week -- Chapter 14 of Train has a good overview.
 \end{itemize}
+\section*{Topic 8:iii EM Algorithm}
+\begin{itemize}
+      \item Classical panel data distinction between RE and FE doesnt apply. The prior
+            for RE is a normal assumption. The FE each one has it's own separate distribution, so each effect
+            is different and not tied together. Bayesian FE is about how the priors are treated.
+
+      \item EM algorithm for a binary choice problem. Data augemntation is the bayseian analog of the
+            EM algo. Then we revist some discrete choice models.
+
+      \item Train chapter 14 is critical for this lecture. Recomneded for the course.
+      \item Looking for techniques to deal with missing data. How can we use maximisation techniques to do this
+      \item Latent variables are a form of missing data. For example unobserved utility is a form of missing data but
+            we observe choices which give us some information.
+
+      \item We could create the marginal liklihood by integrating out the missing data.
+      \item But we contruct the likelihood with missing data, called the complete data likelihood.
+
+      \item Calculate the expected value of the complete data likelihood. And then iterate
+            with $\theta$, note that this determines likelihood of missing data as well.
+
+      \item Now we re do it for binary response.
+      \item Curse of dimensionality in random utility models
+      \item as number of choices gets large it becomes more and more difficult to maximise
+            the likelihood. Because we get multidimensional integrals. Bayesian approach does not help us.
+
+      \item this is where data augmentation comes into it. Treat unobserved data the same way as we treat
+            unobserved parameters. Prior over missing data becomes a function of $\theta$.
+      \item DA converts likelihood into deterministic function which is much easier to work with than a
+            likelihood.
+
+      \item Not covering Gibbs sampling this year.
+      \item \textbf{Topic: iiii}
+      \item Simulated maximum likelihood.
+      \item Make sure I understand the trinomial probit model.
+      \item Now we look at Bayesian Mixed Logit
+\end{itemize}
 
 \end{document}
