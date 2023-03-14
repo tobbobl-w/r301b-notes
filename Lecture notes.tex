@@ -276,9 +276,25 @@
 
       \item Decision tree just splits up x's into different bins. But it may fit the data wwell but id overfitted.
             SO we use a random forest. Build lots of trees for different samples and then just average.
-
       \item This is a bit like calculating a mean for each subgroup of the population. Because we are making
             an average.
+
+      \item Causal inference in these models is the frontier of the research and is where we are heading.
+      \item If add ages to the cef of wages we get something that is relatively similar to k means. i.e. $E(wages |sex, age) = g(x)$.
+      \item We need to decide what variables to split for decision/logic trees.
+      \item Density estimations. Problem of reconstructing the pdf using a set of given data.
+            Essentially a histogram. Averaging over the points that are within a bin.
+            We can then smooth this with a non para metric kernel estimator because the histograms has large discontinuities.
+            Bin width is a hyper parameter, also known as a regulrisation parameter.
+            Obviously as you decrease the bin size you start to overfit the data, changes might reflect idiosyncratic differnces rather than the true
+            data generating process.
+
+      \item k-nearest neighbours is one of the simplist non-parametric estimators.
+            $y_{i}= f(x_{i}) + \epsilon$ where f() is the average of k-nearest data points.
+
+      \item You can have local ks but most researchers assume a global value for k.
+      \item
+
 \end{itemize}
 
 \end{document}
